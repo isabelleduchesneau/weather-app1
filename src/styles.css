@@ -59,6 +59,10 @@ li::first-letter {
 .weather-temperature .active:hover {
   text-decoration: none;
 }
-#farenheit-temperature {
+.weather-temperature .farenheit {
+  text-decoration: none;
+}
+
+#celcius-temperature {
   text-decoration: none;
 }

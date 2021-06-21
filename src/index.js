@@ -100,15 +100,16 @@ function getWeather(lat, lon) {
   axios.get(apiURL).then(handleWeather);
 }
 
-// function handleWeather(response) {
-//   let temperature = Math.round(response.data.main.temp);
+function handleWeather(response) {
+  let temperature = Math.round(response.data.main.temp);
 
-//   let newTemp = document.querySelector("#new-temp");
-//   newTemp.innerHTML = `${temperature}`;
+  let newTemp = document.querySelector("#new-temp");
+  newTemp.innerHTML = `${temperature}`;
 
-//   let h1 = document.querySelector("h1");
-//   h1.innerHTML = `${response.data.name}`;
-//   console.log(response);
+  let h1 = document.querySelector("h1");
+  h1.innerHTML = `${response.data.name}`;
+  console.log(response);
+}
 
 //   let humidityElement = document.querySelector("#humidity");
 //   humidityElement.innerHTML = response.data.main.humidity;

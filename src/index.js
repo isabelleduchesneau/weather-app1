@@ -18,6 +18,32 @@ let days = [
 let day = days[now.getDay()];
 dateNow.innerHTML = `${day} ${hours}:${minutes}`;
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row">`;
+  let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
+              <div class="col-2">
+                <div class="weather-forecast-date">${day}</div>
+                <img
+                  src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
+                  alt=""
+                  width="45"
+                />
+                <div class="weather-forecast-temperature">
+                  <span class="weather-forecast-temperature-maximum">18</span>°
+                  <span class="weather-forecast-temperature-minimum">12</span>°
+                </div>
+              </div>`;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function search(event) {
   event.preventDefault();
   let searchInput = document.querySelector("#new-city");
@@ -76,40 +102,42 @@ farenheitLink.addEventListener("click", displayFarenheitTemperature);
 let celciusLink = document.querySelector("#celcius-temperature");
 celciusLink.addEventListener("click", displayCelciusTemperature);
 
-//Current location
-let currentLocation = document.querySelector("#current-location");
-currentLocation.addEventListener("click", geoLocation);
+displayForecast();
 
-function geoLocation(event) {
-  navigator.geolocation.getCurrentPosition(loadTemperature);
-}
-function loadTemperature(position) {
-  let lat = position.coords.latitude;
-  let lon = position.coords.longitude;
+// //Current location
+// let currentLocation = document.querySelector("#current-location");
+// currentLocation.addEventListener("click", geoLocation);
 
-  // Get info from API
-  getWeather(lat, lon);
-}
+// function geoLocation(event) {
+//   navigator.geolocation.getCurrentPosition(loadTemperature);
+// }
+// function loadTemperature(position) {
+//   let lat = position.coords.latitude;
+//   let lon = position.coords.longitude;
 
-function getWeather(lat, lon) {
-  // Build the API string
-  let units = "metric";
-  let apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`;
+//   // Get info from API
+//   getWeather(lat, lon);
+// }
 
-  // Get the info from API
-  axios.get(apiURL).then(handleWeather);
-}
+// function getWeather(lat, lon) {
+//   // Build the API string
+//   let units = "metric";
+//   let apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`;
 
-function handleWeather(response) {
-  let temperature = Math.round(response.data.main.temp);
+//   // Get the info from API
+//   axios.get(apiURL).then(handleWeather);
+// }
 
-  let newTemp = document.querySelector("#new-temp");
-  newTemp.innerHTML = `${temperature}`;
+// function handleWeather(response) {
+//   let temperature = Math.round(response.data.main.temp);
 
-  let h1 = document.querySelector("h1");
-  h1.innerHTML = `${response.data.name}`;
-  console.log(response);
-}
+//   let newTemp = document.querySelector("#new-temp");
+//   newTemp.innerHTML = `${temperature}`;
+
+//   let h1 = document.querySelector("h1");
+//   h1.innerHTML = `${response.data.name}`;
+//   console.log(response);
+// }
 
 //   let humidityElement = document.querySelector("#humidity");
 //   humidityElement.innerHTML = response.data.main.humidity;

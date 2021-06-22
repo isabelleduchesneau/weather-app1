@@ -134,9 +134,11 @@ celciusLink.addEventListener("click", displayCelciusTemperature);
 
 function geoLocation(event) {
   event.preventDefault();
-  let currentLocation = document.querySelector("#current-location");
-  currentLocation.addEventListener("click", geoLocation);
+  navigator.geolocation.getCurrentPosition(loadTemperature);
 }
+// getWeather(lat, lon);
+let currentLocation = document.querySelector("#current-location");
+currentLocation.addEventListener("click", geoLocation);
 
 function handleWeather(response) {
   let temperature = Math.round(response.data.main.temp);
@@ -146,6 +148,14 @@ function handleWeather(response) {
 
   let h1 = document.querySelector("h1");
   h1.innerHTML = `${response.data.name}`;
+  let iconElement = document.querySelector("#icon");
+  iconElement.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+  celciusTemperature = Math.round(response.data.main.temp);
+  getForecast(response.data.coord);
+
   console.log(response);
 }
 function loadTemperature(position) {
@@ -155,8 +165,6 @@ function loadTemperature(position) {
   //   // Get info from API
   axios.get(apiURL).then(handleWeather);
 }
-navigator.geolocation.getCurrentPosition(loadTemperature);
-//  getWeather(lat, lon);
 
 // function getWeather(lat, lon) {
 //   // Build the API string

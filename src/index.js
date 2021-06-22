@@ -131,40 +131,40 @@ let celciusLink = document.querySelector("#celcius-temperature");
 celciusLink.addEventListener("click", displayCelciusTemperature);
 
 // //Current location
-// let currentLocation = document.querySelector("#current-location");
-// currentLocation.addEventListener("click", geoLocation);
 
-// function geoLocation(event) {
-//   navigator.geolocation.getCurrentPosition(loadTemperature);
-// }
-// function loadTemperature(position) {
-//   let lat = position.coords.latitude;
-//   let lon = position.coords.longitude;
+function geoLocation(event) {
+  event.preventDefault();
+  let currentLocation = document.querySelector("#current-location");
+  currentLocation.addEventListener("click", geoLocation);
+}
 
-//   // Get info from API
-//   getWeather(lat, lon);
-// }
+function handleWeather(response) {
+  let temperature = Math.round(response.data.main.temp);
+
+  let newTemp = document.querySelector("#new-temp");
+  newTemp.innerHTML = `${temperature}`;
+
+  let h1 = document.querySelector("h1");
+  h1.innerHTML = `${response.data.name}`;
+  console.log(response);
+}
+function loadTemperature(position) {
+  let lat = position.coords.latitude;
+  let lon = position.coords.longitude;
+  let apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+  //   // Get info from API
+  axios.get(apiURL).then(handleWeather);
+}
+navigator.geolocation.getCurrentPosition(loadTemperature);
+//  getWeather(lat, lon);
 
 // function getWeather(lat, lon) {
 //   // Build the API string
 //   let units = "metric";
-//   let apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`;
 
-//   // Get the info from API
-//   axios.get(apiURL).then(handleWeather);
+// Get the info from API
+
 // }
-
-// function handleWeather(response) {
-//   let temperature = Math.round(response.data.main.temp);
-
-//   let newTemp = document.querySelector("#new-temp");
-//   newTemp.innerHTML = `${temperature}`;
-
-//   let h1 = document.querySelector("h1");
-//   h1.innerHTML = `${response.data.name}`;
-//   console.log(response);
-// }
-
 //   let humidityElement = document.querySelector("#humidity");
 //   humidityElement.innerHTML = response.data.main.humidity;
 //   console.log(humidityElement);
